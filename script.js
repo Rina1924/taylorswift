@@ -1,10 +1,3 @@
-// Best viewed in full screen mode:
-// https://codepen.io/jackiezen/full/MWBBawb
-
-// Jackie Zen in collaboration with Daniel Wong
-// https://github.com/Daniel-Wong94
-
-// DOM elements
 const scrollLeft = document.querySelector(".scroll-left");
 const scrollRight = document.querySelector(".scroll-right");
 const heroDiv = document.querySelector(".hero-img");
@@ -22,7 +15,7 @@ const albums = [
 		"bg-color": ["#7A746F", "#332F2B"],
 		"accent-color": "#7A746F",
 		url:
-			"https://avatars.yandex.net/get-music-content/6058982/51b92c1f.a.30812953-1/m1000x1000",
+			"https://avatars.yandex.net/get-music-content/6058982/51b92c1f.a.30812953-1/m400x400",
 		spotify:
 			"https://music.yandex.ru/iframe/album/30812953"
 	},
@@ -118,13 +111,12 @@ const albums = [
 		"bg-color": ["#6F6F4C", "#34351E"],
 		"accent-color": "#B2C15E",
 		url:
-			"https://avatars.yandex.net/get-music-content/41288/a1c71771.a.7845-4/m1000x1000",
+			"https://avatars.yandex.net/get-music-content/41288/a1c71771.a.7845-4/m400x400",
 		spotify:
 			"https://music.yandex.ru/iframe/album/7845"
 	}
 ];
 
-// Add Event Listeners
 scrollLeft.addEventListener("click", () => handleClickScroll(-1));
 scrollRight.addEventListener("click", () => handleClickScroll(1));
 heroDiv.addEventListener("animationend", () => {
@@ -136,7 +128,6 @@ heroDiv.addEventListener("animationend", () => {
 	for (const text of texts) text.classList.add("show-texts");
 });
 
-// Event Listeners
 const handleClickScroll = (val) => {
 	if (index + val >= 0 && index + val < albums.length) {
 		updateDisplay((index += val));
@@ -154,22 +145,18 @@ const handleKeyScroll = (e) => {
 	}
 };
 
-// Main Function
 let index = 0;
 
 const updateDisplay = (index) => {
 
-	// delcare album specified by index
 	const album = albums[index];
 
-	// reset all animations and disable button
 	for (const text of texts) text.classList.remove("show-texts");
 	emblemDiv.innerHTML = "";
 	scrollLeft.disabled = true;
 	scrollRight.disabled = true;
 	document.removeEventListener("keydown", handleKeyScroll);
 
-	// add css classes, texts, and styles
 	sectionContainer.id = `hero-${album.album.toLowerCase().replace(" ", "-")}`;
 	bodyContainer.style.background = `linear-gradient(180deg, ${album["bg-color"][0]} 0%, ${album["bg-color"][1]} 100%)`;
 	heroDiv.style.backgroundImage = `url(${album.url})`;
@@ -180,19 +167,16 @@ const updateDisplay = (index) => {
 	albumNum.innerText = number >= 10 ? number + "." : `0${number}.`;
 	albumNum.style.color = album["accent-color"];
 
-	// hide arrows
 	if (index === 0) scrollLeft.classList.add("hide-arrow");
 	else scrollLeft.classList.remove("hide-arrow");
 
 	if (index === 10) scrollRight.classList.add("hide-arrow");
 	else scrollRight.classList.remove("hide-arrow");
 
-	// create emblem
 	createEmblem(album.emblem, "•").forEach((node) =>
     emblemDiv.append(node)
 );
 
-	// add final animations
 	heroDiv.classList.add("album-transition");
 };
 
@@ -213,5 +197,4 @@ const createEmblem = (string, delimiter = "•") => {
     return spans;
 };
 
-// Start Script
 updateDisplay(index);
